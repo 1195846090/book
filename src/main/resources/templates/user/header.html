@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>导航页</title>
+<base th:href="@{/}"><!-- 不用base就使用th:src="@{/js/jquery.min.js} -->
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<style type="text/css">
+     .carousel{
+         height: 400px;
+         background-color: #000;
+      }
+      .carousel .item{
+         height: 400px;
+         background-color: #000;
+      }
+      .carousel img{
+         width: 100%;
+      }
+</style>
+</head>
+<body> <img src="images/b14.png">
+	<div class="container-fruid">
+		<div class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation"
+			style="padding-left: 30px;">
+			<div class="navbar-header">
+				<span class="navbar-brand">欢迎光临</span>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a th:href="@{user/toRegister}" >免费注册</a></li>
+				<li>
+					<a th:href="(${session.bUser} == null)?'user/toLogin':'#'" >
+						<span th:if="${session.bUser} == null" >
+							登录
+						</span>
+						<span th:if="${session.bUser} != null" >
+							欢迎<span th:text="${session.bUser.bemail}" ></span>
+						</span>
+					</a>
+				</li>
+				<li><a th:href="@{admin/toLogin}">后台</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right" style="padding-right: 30px;">
+				<li><a href="cart/userInfo"><span class="glyphicon glyphicon-user">&nbsp;个人信息</span></a></li>
+				<li><a href="cart/selectCart"><span class="glyphicon glyphicon-shopping-cart">&nbsp;我的购物车</span></a></li>
+				<li><a href="cart/myFocus"><span class="glyphicon glyphicon-home">&nbsp;我的收藏</span></a></li>
+				<li><a href="cart/myOder"><span class="glyphicon glyphicon-th-list">&nbsp;我的订单</span></a></li>
+				<li class="dropdown"><a href="##" data-toggle="dropdown"
+					class="dropdown-toggle">关于我们<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="##">联系我们</a></li>
+						<li><a href="##">投诉建议</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		 <section>
+		   <div class="container-fuild">
+        <div class="row">
+            <div class="col-md-9">
+		<!-- ************************************************** -->
+		<div id="carousel-example-generic" class="carousel slide"
+			data-ride="carousel" style="margin-top: 20px;">
+			<!-- Indicators 小圆圈-->
+			<ol class="carousel-indicators">
+				<li data-target="#carousel-example-generic" 
+				th:each="advertise,adstat:${advertisementGoods}" 
+				th:data-slide-to="${adstat.index}"
+				th:class="(${adstat.index}==0)? 'active' : ''"></li>
+			</ol>
+			<!-- 滚动广告图片 -->
+			<div class="carousel-inner" role="listbox">
+				<div th:each="advertise,adstat:${advertisementGoods}" th:class="(${adstat.index}==0)? 'item active' : 'item'">
+					<img th:src="'images/' + ${advertise.gpicture}" th:alt="${adstat.index + 1}">
+					<div class="carousel-caption"><span th:text="${advertise.gname}"></span></div>
+				</div>
+			</div>
+			<!-- Controls -->
+			<a class="left carousel-control" href="#carousel-example-generic"
+				role="button" data-slide="prev"> <span
+				class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a> <a class="right carousel-control" href="#carousel-example-generic"
+				role="button" data-slide="next"> <span
+				class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+		<!-- *************************************** -->
+		<div class="navbar navbar-default " role="navigation">
+			<ul class="nav navbar-nav" style="padding-left: 50px;">
+				<li><a th:href="@{/}">首页</a></li>
+				<li th:each="gty:${goodsType}"><a th:href="'?tid=' + ${gty.id}"><span th:text="${gty.typename}"></span></a></li>
+			</ul>
+			<form action="search" class="navbar-form navbar-right"
+				style="padding-right: 50px;">
+				<div class="form-group">
+					<input type="text" class="form-control" name="mykey" placeholder="请输入关键词" />
+				</div>
+				<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-zoom-in">搜索</button>
+			</form>
+		</div>
+	</div>
+	  <div class="col-md-2">
+                    <div class="row">
+                        <h4 class="left">书籍排行</h4>
+                        <ul class="nav nav-tabs pull-right">
+                            <li class="active"><a href="#name1" data-toggle="tab">热门</a></li>
+                            <li><a href="#name2" data-toggle="tab">经典</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="name1">
+                                <table width="95%" border="0" cellpadding="0" cellspacing="0" style="position:relative; margin-top: 2px;margin-left:5%;">
+                                    <script>
+                                        var num = 1;
+                                        var nameArr = new Array("终结者5","飓风营救","我是传奇","一线声机","罗马假日","史密斯夫妇","午夜邂逅");
+                                        var dnumArr = new Array("阿诺德.施瓦辛格","连姆.尼森","威尔.史密斯","杰森.斯坦森","格里高利.派克","布拉德.皮特","克里斯.埃文斯");
+                                        for(var i=0; i<nameArr.length; i++){
+                                            document.write('<tr height="43">');
+                                            document.write('<td width="26" align="center" class="f_td">'+(num++)+'</td>');
+                                            document.write('<td width="75" align="left" class="f_td"><a href="#">'+nameArr[i]+'</td>');
+                                            document.write('<td width="90" align="right" class="f_td">'+dnumArr[i]+'</td></tr>');
+                                        }
+                                    </script>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="name2">
+                                <table width="95%" border="0" cellpadding="0" cellspacing="0" style="position:relative; margin-top: 2px;margin-left:5%;">
+                                <script>
+                                    var num = 1;
+                                    var nameArr = new Array("机械师2：复活","变形金刚","暮光之城","怦然心动","电话情缘","超凡蜘蛛侠","雷神");
+                                    var dnumArr = new Array("杰森.斯坦森","希亚.拉博夫","克里斯汀.斯图尔特","玛德琳.卡罗尔","杰西.麦特卡尔菲","安德鲁.加菲尔德","克里斯.海姆斯沃斯");
+                                    for(var i=0; i<nameArr.length; i++){
+                                        document.write('<tr height="43">');
+                                        document.write('<td width="26" align="center" class="f_td">'+(num++)+'</td>');
+                                        document.write('<td width="75" align="left" class="f_td"><a href="#">'+nameArr[i]+'</td>');
+                                        document.write('<td width="90" align="right" class="f_td">'+dnumArr[i]+'</td></tr>');
+                                    }
+                                </script>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        </div>
+    </section>
+</body>
+</html>

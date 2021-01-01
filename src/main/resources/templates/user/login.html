@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<base th:href="@{/}"><!-- 不用base就使用th:src="@{/js/jquery.min.js} -->
+<meta charset="UTF-8">
+<title>登录页面</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="stylesheet" href="css/supersized.css">
+<link rel="stylesheet" href="css/login.css">
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+	<script src="js/html5.js"></script>
+<![endif]-->
+<script src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/tooltips.js"></script>
+<script type="text/javascript" src="js/login.js"></script>
+<link rel="stylesheet" href="/eBusiness/css/bootstrap.min.css" />
+<script type="text/javascript" th:inline="javascript">
+	function refreshCode(){
+		document.getElementById("mycode").src = [[@{/validateCode}]] + "?t=" + Math.random();
+	}
+</script>
+<body>
+	<div class="page-container">
+	<div class="main_box">
+		<div class="login_box">
+			<div class="login_logo">
+				<img src="images/logo.png" >
+			</div>
+		
+			<div class="login_form">
+				<form action="user/login" name="myform" method="post" th:object="${bUser}"  class="form-horizontal" role="form" >
+					<div class="form-group has-success">
+						<label for="j_username" class="t">邮　箱：</label> 
+						<input th:field="*{bemail}" placeholder="请输入您的邮箱" type="email" class="form-control x319 in" 
+						autocomplete="off">
+						<span th:errors="*{bemail}"></span>
+					</div>
+					<div class="form-group">
+						<label for="j_password" class="t">密　码：</label> 
+						<input  type="password" 
+						class="password form-control x319 in" placeholder="请输入您的密码" th:field="*{bpwd}">
+						<span th:errors="*{bpwd}"></span>
+					</div>
+					<div class="form-group">
+						<label for="j_captcha" class="t">验证码：</label>
+				  		<input id="j_captcha" name="j_captcha" type="text" class="form-control x164 in"
+					 placeholder="请输入验证码" th:field="*{code}"/>
+					 				<img th:src="@{/validateCode}" id="mycode">
+					 				<a href="javascript:refreshCode()">看不清换一张</a>			  
+					</div>
+					<div class="form-group">
+						<label class="t"></label>
+						<label for="j_remember" class="m">
+						<input id="j_remember" type="checkbox" value="true">&nbsp;记住登陆账号!</label>
+					</div>
+					<div class="form-group space">
+						<label class="t"></label>　　　
+						<button type="submit"  id="submit_btn" 
+						class="btn btn-success btn-lg">&nbsp;登&nbsp;录&nbsp;</button>
+						<input type="reset" value="&nbsp;重&nbsp;置&nbsp;" class="btn btn-primary btn-lg">
+					</div>
+					
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<font size="6" color="red">
+						<span th:text="${errorMessage }"></span>
+					</font>
+				</div>
+			</div>
+				</form>
+			</div>
+		</div>
+		<div class="bottom">Copyright &copy; 2019 - 2020 <a href="#">返回主页</a></div>
+	</div>
+</div>
+
+<!-- Javascript -->
+
+<script src="js/supersized.3.2.7.min.js"></script>
+<script src="js/supersized-init.js"></script>
+<script src="js/scripts.js"></script>
+<div style="text-align:center;">
+<p>来源:<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
+</div>
+</html>
